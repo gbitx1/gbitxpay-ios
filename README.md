@@ -21,9 +21,9 @@ Two hosts are involved: the SDK validates your publishable key against the API h
 .package(url: "https://github.com/gbitx1/gbitxpay-ios.git", from: "0.1.0")
 ```
 
-**CocoaPods.** Resolve directly from the tagged release:
+**CocoaPods.** Published on the CocoaPods trunk:
 ```ruby
-pod 'GbitXPay', :git => 'https://github.com/gbitx1/gbitxpay-ios.git', :tag => '0.1.0'
+pod 'GbitXPay', '~> 0.1'
 ```
 
 ## Usage — UIKit
