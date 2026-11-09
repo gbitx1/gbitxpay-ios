@@ -50,29 +50,29 @@ final class GbitXPayTests: XCTestCase {
     }
 
     func testBuildCheckoutURL() {
-        let url = Validation.buildCheckoutURL(checkoutOrigin: "https://pay.gbitx.com", paymentId: "pay123456", clientToken: String(repeating: "a", count: 32))
+        let url = Validation.buildCheckoutURL(checkoutOrigin: "https://www.gbitxpay.com", paymentId: "pay123456", clientToken: String(repeating: "a", count: 32))
         XCTAssertNotNil(url)
-        XCTAssertTrue(url!.absoluteString.hasPrefix("https://pay.gbitx.com/p/pay123456?embed=native#t="))
+        XCTAssertTrue(url!.absoluteString.hasPrefix("https://www.gbitxpay.com/p/pay123456?embed=native#t="))
     }
 
     // MARK: - WebViewPolicy (exact-origin, look-alike rejection)
 
     func testOriginPolicyRejectsLookAlikes() {
-        let origin = "https://pay.gbitx.com"
+        let origin = "https://www.gbitxpay.com"
         func u(_ s: String) -> URL { URL(string: s)! }
-        XCTAssertTrue(WebViewPolicy.mayLoadInWebView(checkoutOrigin: origin, url: u("https://pay.gbitx.com/p/x")))
-        XCTAssertTrue(WebViewPolicy.mayLoadInWebView(checkoutOrigin: origin, url: u("https://pay.gbitx.com/assets/a.js")))
-        for bad in ["https://pay.gbitx.com.evil.com/p/x", "https://pay.gbitx.company/p/x", "http://pay.gbitx.com/p/x", "https://sub.pay.gbitx.com/p/x"] {
+        XCTAssertTrue(WebViewPolicy.mayLoadInWebView(checkoutOrigin: origin, url: u("https://www.gbitxpay.com/p/x")))
+        XCTAssertTrue(WebViewPolicy.mayLoadInWebView(checkoutOrigin: origin, url: u("https://www.gbitxpay.com/assets/a.js")))
+        for bad in ["https://www.gbitxpay.com.evil.com/p/x", "https://www.gbitxpay.company/p/x", "http://www.gbitxpay.com/p/x", "https://sub.www.gbitxpay.com/p/x"] {
             XCTAssertFalse(WebViewPolicy.mayLoadInWebView(checkoutOrigin: origin, url: u(bad)), bad)
         }
     }
 
     func testTrustedMessageSourceRequiresPaymentPath() {
-        let origin = "https://pay.gbitx.com"
+        let origin = "https://www.gbitxpay.com"
         func u(_ s: String) -> URL { URL(string: s)! }
-        XCTAssertTrue(WebViewPolicy.isTrustedMessageSource(checkoutOrigin: origin, url: u("https://pay.gbitx.com/p/abc?x#t=y")))
-        XCTAssertFalse(WebViewPolicy.isTrustedMessageSource(checkoutOrigin: origin, url: u("https://pay.gbitx.com/")))
-        XCTAssertFalse(WebViewPolicy.isTrustedMessageSource(checkoutOrigin: origin, url: u("https://pay.gbitx.com.evil.com/p/abc")))
+        XCTAssertTrue(WebViewPolicy.isTrustedMessageSource(checkoutOrigin: origin, url: u("https://www.gbitxpay.com/p/abc?x#t=y")))
+        XCTAssertFalse(WebViewPolicy.isTrustedMessageSource(checkoutOrigin: origin, url: u("https://www.gbitxpay.com/")))
+        XCTAssertFalse(WebViewPolicy.isTrustedMessageSource(checkoutOrigin: origin, url: u("https://www.gbitxpay.com.evil.com/p/abc")))
     }
 
     // MARK: - MessageHandler
@@ -132,11 +132,11 @@ final class GbitXPayTests: XCTestCase {
     }
 
     func testParseConfigSuccessValidatesShape() {
-        let ok = try? GbitXPayCore.parseConfigSuccess(["success": true, "environment": "live", "checkoutBaseUrl": "https://pay.gbitx.com", "merchant": ["name": "Acme"]])
+        let ok = try? GbitXPayCore.parseConfigSuccess(["success": true, "environment": "live", "checkoutBaseUrl": "https://www.gbitxpay.com", "merchant": ["name": "Acme"]])
         XCTAssertEqual(ok?.environment, .live)
-        XCTAssertEqual(ok?.checkoutOrigin, "https://pay.gbitx.com")
+        XCTAssertEqual(ok?.checkoutOrigin, "https://www.gbitxpay.com")
         XCTAssertThrowsError(try GbitXPayCore.parseConfigSuccess(["success": false]))
-        XCTAssertThrowsError(try GbitXPayCore.parseConfigSuccess(["success": true, "environment": "prod", "checkoutBaseUrl": "https://pay.gbitx.com", "merchant": [:]]))
-        XCTAssertThrowsError(try GbitXPayCore.parseConfigSuccess(["success": true, "environment": "live", "checkoutBaseUrl": "http://pay.gbitx.com", "merchant": [:]]))
+        XCTAssertThrowsError(try GbitXPayCore.parseConfigSuccess(["success": true, "environment": "prod", "checkoutBaseUrl": "https://www.gbitxpay.com", "merchant": [:]]))
+        XCTAssertThrowsError(try GbitXPayCore.parseConfigSuccess(["success": true, "environment": "live", "checkoutBaseUrl": "http://www.gbitxpay.com", "merchant": [:]]))
     }
 }

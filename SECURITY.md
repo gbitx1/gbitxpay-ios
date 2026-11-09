@@ -20,9 +20,9 @@ The GbitXPay iOS SDK opens the hosted checkout in a hardened `WKWebView`. This d
 
 ## Residual risks (cannot be closed client‑side)
 
-1. **A compromised checkout origin can emit a forged `.confirmed`.** If `pay.gbitx.com` itself is compromised or MITM'd, a same‑origin page can send any bridge event. **Mitigation: webhook‑is‑truth.** TLS + the origin lock prevent MITM.
+1. **A compromised checkout origin can emit a forged `.confirmed`.** If `www.gbitxpay.com` itself is compromised or MITM'd, a same‑origin page can send any bridge event. **Mitigation: webhook‑is‑truth.** TLS + the origin lock prevent MITM.
 2. **App‑Bound Domains** (`WKAppBoundDomains` + `limitsNavigationsToAppBoundDomains`) is an optional OS‑enforced origin lock the SDK does not force — it requires host‑app `Info.plist` entries and constrains other WebViews in the app. Enable it if that fits your app. (If enabled **without** listing the host, WKWebView silently disables `messageHandlers` and breaks the bridge.)
-3. **TLS public‑key pinning** for `pay.gbitx.com` is a recommended opt‑in fast‑follow, not enabled by default (to avoid bricking on cert rotation).
+3. **TLS public‑key pinning** for `www.gbitxpay.com` is a recommended opt‑in fast‑follow, not enabled by default (to avoid bricking on cert rotation).
 
 ## Reporting a vulnerability
 

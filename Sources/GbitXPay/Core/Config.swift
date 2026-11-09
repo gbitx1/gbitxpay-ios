@@ -15,7 +15,7 @@ actor GbitXPayCore {
     private var inflightKey: String?
     private var currentRunId: UUID?
 
-    private static let defaultApiBase = "https://gateway.gbitx.com"
+    private static let defaultApiBase = "https://api.gbitxpay.com"
     private static let defaultTimeout: TimeInterval = 10
     private static let minTimeout: TimeInterval = 1
     private static let maxTimeout: TimeInterval = 60

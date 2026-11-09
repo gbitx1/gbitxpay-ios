@@ -6,7 +6,7 @@ import Foundation
 /// EXACT origin equality everywhere (scheme + host + port). WKWebView has no
 /// `originWhitelist` prop, so the navigation-delegate gate below is the sole
 /// authority — and it must never use `hasPrefix`/`contains` (that would allow
-/// `pay.gbitx.com.evil.com`).
+/// `www.gbitxpay.com.evil.com`).
 enum WebViewPolicy {
 
     /// Canonical `scheme://host[:port]` origin, omitting default ports. Lowercased.

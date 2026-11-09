@@ -12,13 +12,13 @@ Accept crypto payments in your iOS app with **GbitXPay**. Opens the hosted GbitX
 
 Your **server** creates the payment with your **secret** key (`gk_`) and hands the app only `{ paymentId, clientToken }`. The app opens the checkout with a **publishable** key (`pk_`). The signed `PAYMENT_CONFIRMED` webhook is the source of truth.
 
-Two hosts are involved: the SDK validates your publishable key against the API host `gateway.gbitx.com`, which returns the separate, pinned checkout origin `pay.gbitx.com` that the `WKWebView` locks to. They are intentionally different hosts. (`doc.gbitx.com` is the docs site.)
+Two hosts are involved: the SDK validates your publishable key against the API host `api.gbitxpay.com`, which returns the separate, pinned checkout origin `www.gbitxpay.com` that the `WKWebView` locks to. They are intentionally different hosts. (`doc.gbitxpay.com` is the docs site.)
 
 ## Install
 
-**Swift Package Manager** (recommended). In Xcode → **File → Add Package Dependencies…**, enter `https://github.com/gbitx1/gbitxpay-ios.git`, and pin **Up to Next Major** from `0.1.0`. Or in a `Package.swift`:
+**Swift Package Manager** (recommended). In Xcode → **File → Add Package Dependencies…**, enter `https://github.com/gbitx1/gbitxpay-ios.git`, and pin **Up to Next Major** from `0.2.0`. Or in a `Package.swift`:
 ```swift
-.package(url: "https://github.com/gbitx1/gbitxpay-ios.git", from: "0.1.0")
+.package(url: "https://github.com/gbitx1/gbitxpay-ios.git", from: "0.2.0")
 ```
 
 **CocoaPods.** Published on the CocoaPods trunk:
@@ -62,7 +62,7 @@ var body: some View {
 ## Your server: creating the payment
 
 ```bash
-curl https://gateway.gbitx.com/v1/payments \
+curl https://api.gbitxpay.com/v1/payments \
   -H "Authorization: Bearer $GBITX_SECRET_KEY" \
   -H "Content-Type: application/json" \
   -d '{"amount": 49.99, "currency": "USD", "description": "Order #1234"}'
